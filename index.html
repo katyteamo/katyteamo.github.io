@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dressify - Tu Probador Virtual</title>
+    <style>
+        
+       
+        
+        
+          h1 {
+      font-size: 80px; /* Tamaño de la fuente */
+      font-weight: bold;
+      color: #ffffff; /* Color del texto */
+      text-transform: uppercase; /* Mayúsculas */
+      letter-spacing: 8px; /* Espaciado entre letras */
+      text-align: center;
+      position: relative; /* Para posicionar las sombras */
+      animation: text-glow 1.5s infinite alternate; /* Animación de resplandor */
+    }
+    h1:hover {
+      color: #f1f1f1;
+      text-shadow: 0 0 10px #ffffff, 0 0 20px #ff0099, 0 0 30px #ff0099; /* Efecto de resplandor */
+    }
+    @keyframes text-glow {
+      0% {
+        text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 15px #ff0000;
+      }
+      50% {
+        text-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff, 0 0 45px #ff00ff;
+      }
+      100% {
+        text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00, 0 0 60px #00ff00;
+      }
+    }
+
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #010324 0%, #ffffff 100%);
+      }
+
+        header {
+            background: linear-gradient(135deg, #25afff 0%, #ffffff 100%);
+            color: white;
+            padding: 3rem; 
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+
+
+        .container {
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .clothes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 15px;
+            flex: 2;
+        }
+
+        .clothes-item {
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgb(12, 98, 226);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .clothes-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .clothes-item img {
+            width: 100%;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .clothes-item h3 {
+            margin: 10px 0;
+            font-size: 0.9rem;
+            color: #333;
+            text-align: center;
+        }
+
+        .mannequin-container {
+            flex: 1;
+            position: sticky;
+            top: 20px;
+            background: #304681;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .mannequin {
+            width: 280px;
+            height: 580px;
+            margin: 0 auto;
+            position: relative;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgNDAwIj48cGF0aCBkPSJNMTAwIDUwYzEzLjggMCAyNS0xMS4yIDI1LTI1UzExMy44IDAgMTAwIDBTNzUgMTEuMiA3NSAyNXMxMS4yIDI1IDI1IDI1ek03MCA5MGMwLTE2LjYgMTMuNC0zMCAzMC0zMHMzMCAxMy40IDMwIDMwdjQwSDcwVjkwek02NSAxNDBoNzB2MjAwSDY1VjE0MHoiIGZpbGw9IiNlMGUwZTAiLz48L3N2Zz4=') no-repeat center;
+            background-size: contain;
+        }
+
+        .worn-item {
+            position: absolute;
+            width: 100%;
+            height: auto;
+            left: 0;
+            transition: all 0.3s ease;
+        }
+
+        .categories {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            background: #01b7ff;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn:hover {
+            background: #000000;
+        }
+
+        .category-btn.active {
+            background: #764ba2;
+        }
+
+        /* Nuevo estilo para el botón de sección mujeres */
+        .section-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: #6a04cf;
+            color: rgb(133, 188, 252);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .section-btn:hover {
+            background: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+   
+  
+    <header>
+        <h1>Dressify</h1>
+        <p>Pruébate la ropa virtualmente</p>
+    </header>
+
+    <!-- Nuevo botón para la sección de mujeres -->
+    <button class="section-btn" onclick="window.location.href='mujeres.html'">Sección Mujeres</button>
+
+    <div class="categories" id="categories">
+        <button class="category-btn active" data-category="all">Todos</button>
+        <button class="category-btn" data-category="top">Parte Superior</button>
+        <button class="category-btn" data-category="bottom">Parte Inferior</button>
+    </div>
+
+    <div class="container">
+        <div class="clothes-grid" id="clothesGrid">
+            <!-- Las prendas se generarán dinámicamente -->
+        </div>
+
+        <div class="mannequin-container">
+            <h2>Probador Virtual</h2>
+            <div class="mannequin" id="mannequin"></div>
+        </div>
+    </div>
+
+    <script>
+        const clothes = [
+            {
+                id: 1,
+                name: "Camiseta Básica Blanca",
+                image: "https://e00-telva.uecdn.es/assets/multimedia/imagenes/2020/04/16/15870614138256.png",
+                position: "top",
+                category: "top"
+            },
+            {
+                id: 2,
+                name: "Jeans Clásicos Azules",
+                image: "https://www.shutterstock.com/image-photo/stack-various-shades-blue-jeans-600nw-2354269525.jpg",
+                position: "bottom",
+                category: "bottom"
+            },
+            {
+                id: 3,
+                name: "Chaqueta formula 1",
+                image: "https://down-co.img.susercontent.com/file/a8e82f5c0ec2d6fe49c5eb40c7c77ca6",
+                position: "top",
+                category: "dress"
+            },
+            {
+                id: 4,
+                name: "Chaqueta rompevientos",
+                image: "https://i0.wp.com/upsportcolombia.com/wp-content/uploads/Chaqueta-Rombos-Hombre-01-Rojo-Frontal.jpg?fit=1280%2C1280&ssl=1",
+                position: "top",
+                category: "outerwear"
+            },
+            {
+                id: 5,
+                name: "Pantalon de sudadera",
+                image: "https://media.istockphoto.com/id/1365757342/es/foto/pantalones-cargo-negros-aislados-sobre-fondo-blanco.jpg?s=612x612&w=0&k=20&c=kes2L-i8v1QcQ4mIe899wJY2KEKzr5uR6yqFQTNSd9o=",
+                position: "bottom",
+                category: "bottom"
+            },
+            {
+                id: 6,
+                name: "Hoodie azul",
+                image: "https://ae01.alicdn.com/kf/S3111abc0f6954e95ae645944fbc01850t/1898-Brooklyn-New-York-Printed-Women-Hoodies-Fashion-Fleece-Hoody-Creativity-Pullover-Clothing-Street-Loose-Sweatshirts.jpg",
+                position: "top",
+                category: "top"
+            },
+            {
+                id: 7,
+                name: "Camisa oversize",
+                image: "https://ae-pic-a1.aliexpress-media.com/kf/S9c6c364cc3a04415b57eca4da6a70b77S.jpg_300x300Q70.jpg_.webp",
+                position: "top",
+                category: "top"
+            },
+            {
+                id: 8,
+                name: "Baggy azul",
+                image: "https://www.shutterstock.com/image-photo/fashion-trendy-womens-jeans-isolated-600nw-2466665519.jpg",
+                position: "bottom",
+                category: "bottom"
+            },
+            {
+                id: 9,
+                name: "Suéter de Lana",
+                image: "https://i.pinimg.com/236x/0a/d7/e9/0ad7e9a08a575a3b684204fab59f8430.jpg",
+                position: "top",
+                category: "top"
+            },
+            {
+                id: 10,
+                name: "Beisbolera sencilla",
+                image: "https://http2.mlstatic.com/D_NQ_NP_719098-MCO71928994825_092023-O.webp",
+                position: "top",
+                category: "outerwear"
+            },
+            {
+                id: 11,
+                name: "Camisa de cuadros",
+                image: "https://www.camiseriaeuropea.com/cdn/shop/files/1140_001.jpg?v=1710382090&width=360",
+                position: "top",
+                category: "top"
+            },
+            {
+                id: 12,
+                name: "Hoodie urbano",
+                image: "https://down-mx.img.susercontent.com/file/sg-11134201-23020-p33tcl5ho4mv43",
+                position: "top",
+                category: "top"
+            },
+            {
+                id: 13,
+                name: "Pantalon baggie negro",
+                image: "https://cdn.shopify.com/s/files/1/0013/2461/3699/files/washed-baggy-wide-leg-jeans-in-black-vintage-denim-pants-121.jpg",
+                position: "bottom",
+                category: "bottom"
+            },
+            {
+                id: 14,
+                name: "air force one",
+                image: "https://media.revistagq.com/photos/5f0d9dc08c6c2847199b3a0b/master/w_1600%2Cc_limit/nike-air-force-1-drew-league.jpg",
+                position: "under",
+                category: "zapatos"
+            },
+            {
+                id: 15,
+                name: "Air force one black",
+                image: "https://media.revistagq.com/photos/5f0d9d8642f91a64e56906cf/master/w_1600,c_limit/nike-air-force-1-ny-vs-ny-1.jpg",
+                position: "under",
+                category: "zapatos"
+            },
+            {
+                id: 15,
+                name: "Chaqueta de cuero",
+                image: "https://cdn-images.farfetch-contents.com/20/26/59/44/20265944_50360560_300.jpg",
+                position: "top",
+                category: "outerwear"
+            },
+            {
+                id: 16,
+                name: "Beisbolera sencilla",
+                image: "https://http2.mlstatic.com/D_NQ_NP_2X_854038-MCO75622594497_042024-T.webp",
+                position: "top",
+                category: "outerwear"
+            },
+            {
+                id: 17,
+                name: "Camisa sencilla",
+                image: "https://i.ebayimg.com/thumbs/images/g/H1wAAOSwpbtm4Vho/s-l1200.jpg",
+                position: "top",
+                category: "outerwear"
+            },
+            {
+                id: 18,
+                name: "Cargo azul",
+                image: "https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2Fa2%2F10%2Fa2104e27c71ce51ca97701160d9146f510cca260.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5Bladies_jeans_straight%5D%2Ctype%5BDESCRIPTIVESTILLLIFE%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url[file:/product/main]",
+                position: "bottom",
+                category: "outerwear"
+            },
+            {
+                id: 19,
+                name: "Nike dunk low siimbionte",
+                image: "https://media.gq.com.mx/photos/66957b23f257b18835eb163c/16:9/w_2560%2Cc_limit/Nike_Dunk_Low_Symbiote.jpg",
+                position: "under",
+                category: "zapatos"
+            },
+            {
+                id: 20,
+                name: "Camisa sencilla",
+                image: "https://arkamgym.com/cdn/shop/files/oversize-shirts-jujutsu-kaisen-v3-208_800x.webp?v=1725210463",
+                position: "top",
+                category: "outerwear"
+            },
+            {
+                id: 21,
+                name: "Camisa sencilla",
+                image: "https://dcdn.mitiendanube.com/stores/004/056/884/products/logo-manuscrito-bbc62d67419449c16017197647074120-480-0.jpg",
+                position: "top",
+                category: "outerwear"
+            },
+            {
+                id: 22,
+                name: "Camisa sencilla",
+                image: "https://ivankiller.com/wp-content/uploads/2024/03/231c91bf-4b00-4d40-ac29-65ade4d318e5.jpg",
+                position: "top",
+                category: "outerwear"
+            },
+            {
+                id: 23,
+                name: "Cargo ",
+                image: "https://hmecuador.vtexassets.com/arquivos/ids/2019230/Baggy-Jeans---Azul-denim-claro---H-M-EC.jpg?v=638591458598230000",
+                position: "bottom",
+                category: "outerwear"
+            },
+            {
+                id: 24,
+                name: "Cargo ",
+                image: "https://image.hm.com/assets/hm/8d/03/8d03f59a17caef400919c15ef19a713a0c7e7ff4.jpg?imwidth=1260",
+                position: "bottom",
+                category: "outerwear"
+            },
+            {
+                id: 25,
+                name: "Cargo ",
+                image: "https://image.hm.com/assets/hm/bf/a9/bfa9bc06bdee8343eade317f5c204cda7f150271.jpg?imwidth=396",
+                position: "bottom",
+                category: "outerwear"
+            },
+        ];
+
+        const clothesGrid = document.getElementById('clothesGrid');
+        const mannequin = document.getElementById('mannequin');
+        const categories = document.getElementById('categories');
+        let currentCategory = 'all';
+
+        function displayClothes(category = 'all') {
+            clothesGrid.innerHTML = '';
+            const filteredClothes = category === 'all' 
+                ? clothes 
+                : clothes.filter(item => item.category === category);
+
+            filteredClothes.forEach(item => {
+                const clothesItem = document.createElement('div');
+                clothesItem.className = 'clothes-item';
+                clothesItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <h3>${item.name}</h3>
+                `;
+
+                clothesItem.addEventListener('click', () => tryOnClothes(item));
+                clothesGrid.appendChild(clothesItem);
+            });
+        }
+
+        function tryOnClothes(item) {
+            if (item.position === 'full') {
+                // Si es un vestido, remover todas las otras prendas
+                mannequin.innerHTML = '';
+            } else {
+                // Remover solo prendas de la misma posición
+                const existingItems = mannequin.querySelectorAll(`.worn-item.${item.position}`);
+                existingItems.forEach(el => el.remove());
+            }
+
+            const wornItem = document.createElement('img');
+            wornItem.src = item.image;
+            wornItem.className = `worn-item ${item.position}`;
+            
+            // Posicionar la prenda según su tipo
+            if (item.position === 'top') {
+                wornItem.style.top = '0';
+                wornItem.style.height = '43%';
+            } else if (item.position === 'bottom') {
+                wornItem.style.top = '39%';
+                wornItem.style.height = '60%';
+            } else if (item.position === 'full') {
+                wornItem.style.top = '0';
+                wornItem.style.height = '100%';
+            } else if (item.position === 'under') {
+                wornItem.style.top = '96%';
+                wornItem.style.height = '30%';
+            }
+            
+            mannequin.appendChild(wornItem);
+        }
+
+        // Manejo de categorías
+        categories.addEventListener('click', (e) => {
+            if (e.target.classList.contains('category-btn')) {
+                const category = e.target.dataset.category;
+                currentCategory = category;
+                
+                // Actualizar botones activos
+                document.querySelectorAll('.category-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                e.target.classList.add('active');
+                
+                // Mostrar prendas de la categoría seleccionada
+                displayClothes(category);
+            }
+        });
+
+        // Mostrar todas las prendas al inicio
+        displayClothes();
+    </script>
+</body>
